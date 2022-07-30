@@ -1,9 +1,23 @@
+import { NFT_prepare_backend } from '../../declarations/NFT_prepare_backend'
 import * as React from 'react'
 import { render } from 'react-dom'
 import { createRoot } from 'react-dom/client'
-import { NFT_prepare_backend } from '../../declarations/NFT_prepare_backend'
+import { Connect2ICProvider } from '@connect2ic/react'
+import { canisterId } from '../declarations'
+import { PlugWallet } from '@connect2ic/core/providers/plug-wallet'
+import { idlFactory } from '../../declarations/NFT_prepare_backend/NFT_prepare_backend.did'
+import '@connect2ic/core/style.css'
 
-const MyHello = () => {
+const providers = [
+  // Either import them from @connect2ic/core
+  PlugWallet,
+]
+
+const canister = {
+  canisterDef = {idlFactory, canisterId}
+}
+const host = window.location.origin
+const App = () => {
   const [name, setName] = React.useState('')
   const [message, setMessage] = React.useState('')
 
@@ -12,30 +26,8 @@ const MyHello = () => {
     setMessage(greeting)
   }
 
-  return (
-    <div style={{ fontSize: '30px' }}>
-      <div style={{ backgroundColor: 'yellow' }}>
-        <p>Greetings, from DFINITY!</p>
-        <p>
-          {' '}
-          Type your message in the Name input field, then click{' '}
-          <b> Get Greeting</b> to display the result.
-        </p>
-      </div>
-      <div style={{ margin: '30px' }}>
-        <input
-          id="name"
-          value={name}
-          onChange={ev => setName(ev.target.value)}
-        ></input>
-        <button onClick={doGreet}>Get Greeting!</button>
-      </div>
-      <div>
-        Greeting is: "<span style={{ color: 'blue' }}>{message}</span>"
-      </div>
-    </div>
-  )
+  return <div style={{ fontSize: '30px' }}></div>
 }
 
 const root = createRoot(document.getElementById('app'))
-root.render(<MyHello />)
+root.render(<App />)
