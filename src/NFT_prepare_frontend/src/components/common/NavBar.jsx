@@ -2,7 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/images/logo_colored.png'
-import { Connect2ICProvider, ConnectButton } from '@connect2ic/react'
+import {
+  Connect2ICProvider,
+  ConnectButton,
+  useConnect,
+} from '@connect2ic/react'
 import { createClient } from '@connect2ic/core'
 import { PlugWallet } from '@connect2ic/core/providers/plug-wallet'
 import { canisterId } from '../../../../declarations/NFT_prepare_backend/index.js'
@@ -12,15 +16,21 @@ const canisterDefinitions = {
   superheroes: { idlFactory, canisterId },
 }
 
-const client = createClient({
-  canisters: canisterDefinitions,
-  providers: [new PlugWallet()],
-})
-const host = window.location.origin
+// const client = createClient({
+//   canisters: canisterDefinitions,
+//   providers: [new PlugWallet()],
+// })
 
 export default function NavBar() {
-  const [connected, setConnected] = React.useState(false)
-  const isConnecting = () => {}
+  const host = window.location.origin
+  const [client, setClient] = React.useState()
+
+  // const { connect, isConnected } = useConnect({
+  //   onConnect: () => {
+  //     console.log('connected')
+  //   },
+  // })
+
   return (
     <Nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
@@ -36,26 +46,28 @@ export default function NavBar() {
           </Link>
         </div>
         <button
-          onClick={() => setConnected(true)}
+          onClick={() =>
+            setClient(
+              createClient({
+                canisters: canisterDefinitions,
+                providers: [new PlugWallet()],
+              })
+            )
+          }
           className="btn btn-outline-success"
           type="submit"
         >
           Connect Wallet
         </button>
-        {connected && (
-          <Connect2ICProvider client={client} host={host}>
-            <ConnectButton
-              dark={false}
-              onConnect={() => {
-                /* connected */
-                console.log(connect)
-              }}
-              onDisconnect={() => {
-                /* disconnected */
-              }}
-            />
-          </Connect2ICProvider>
-        )}
+        <Connect2ICProvider client={client} host={host}>
+          <ConnectButton
+            dark={false}
+            onConnect={() => {
+              console.log('connect')
+            }}
+            onDisconnect={() => {}}
+          />
+        </Connect2ICProvider>
       </div>
     </Nav>
   )
