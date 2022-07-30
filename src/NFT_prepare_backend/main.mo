@@ -110,7 +110,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     );
   };
 
-  public query func getMetadataDip721(token_id: Types.TokenId) : async Types.MetadataResult {
+  public query func getMetadataDip721(token_id: Types.TokenId) : async Types.FullMetadata {
     let item = List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
     switch (item) {
       case null {
@@ -122,30 +122,51 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     };
   };
 
+    public query func getCenter(token_id : Types.TokenId) : async Text {
+        let metadata = get MetadataDip721(token_id);
+        return metadata.center;
+    };
+
+    public query func getName(token_id : Types.TokenId) : async Text {
+        let metadata = get MetadataDip721(token_id);
+        return metadata.name;
+    };
+
+    public query func getID(token_id : Types.TokenId) : async Text {
+        let metadata = get MetadataDip721(token_id);
+        return metadata.id;
+    };
+
+    public query func getCid(token_id : Types.TokenId) : async Text {
+        let metadata = get MetadataDip721(token_id);
+        return metadata.Cid;
+    };
+
+
   public query func getMaxLimitDip721() : async Nat16 {
     return maxLimit;
   };
 
-  public func getMetadataForUserDip721(user: Principal) : async Types.ExtendedMetadataResult {
-    let item = List.find(nfts, func(token: Types.Nft) : Bool { token.owner == user });
-    switch (item) {
-      case null {
-        return #Err(#Other);
-      };
-      case (?token) {
-        return #Ok({
-          metadata_desc = token.metadata;
-          token_id = token.id;
-        });
-      }
-    };
-  };
+//   public func getMetadataForUserDip721(user: Principal) : async Types.ExtendedMetadataResult {
+//     let item = List.find(nfts, func(token: Types.Nft) : Bool { token.owner == user });
+//     switch (item) {
+//       case null {
+//         return #Err(#Other);
+//       };
+//       case (?token) {
+//         return #Ok({
+//           metadata_desc = token.metadata;
+//           token_id = token.id;
+//         });
+//       }
+//     };
+//   };
 
-  public query func getTokenIdsForUserDip721(user: Principal) : async [Types.TokenId] {
-    let items = List.filter(nfts, func(token: Types.Nft) : Bool { token.owner == user });
-    let tokenIds = List.map(items, func (item : Types.Nft) : Types.TokenId { item.id });
-    return List.toArray(tokenIds);
-  };
+//   public query func getTokenIdsForUserDip721(user: Principal) : async [Types.TokenId] {
+//     let items = List.filter(nfts, func(token: Types.Nft) : Bool { token.owner == user });
+//     let tokenIds = List.map(items, func (item : Types.Nft) : Types.TokenId { item.id });
+//     return List.toArray(tokenIds);
+//   };
 
   public shared({ caller }) func mintDip721(to: Principal, metadata: Types.FullMetadata) : async Types.MintReceipt {
     if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
