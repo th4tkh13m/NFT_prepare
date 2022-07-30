@@ -54,7 +54,26 @@ jobs:
       - name : run dfx
         run : |
           dfx start --background
-          dfx deploy --argument="(principal \"$(dfx identity get-principal)\")"
+          dfx deploy --argument "(
+            principal\"$(dfx identity get-principal)\",
+            record {
+              logo = record {
+                logo_type = \"src/NFT_prepare_frontend/assets/favicon.ico\";
+                data = \"\";
+              };
+              name = \"My DIP721\";
+              symbol = \"DFXB\";
+              maxLimit = 10;
+            }
+          )"
+      - name: mint NFT
+        run : dfx canister call NFT_prepare_backend mintDip721 \
+                "(
+                  principal\"$(dfx identity get-principal)\",
+                    record {id=\"De160000\"; cid=\"1234\"; center=\"FBT\"; name=\"HUSONE\"}
+                )"
+
+
       - name : stop dfx
         run : dfx stop
       # Runs a set of commands using the runners shell
