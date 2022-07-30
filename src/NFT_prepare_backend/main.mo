@@ -147,7 +147,7 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     return List.toArray(tokenIds);
   };
 
-  public shared({ caller }) func mintDip721(to: Principal, metadata: Types.MetadataDesc) : async Types.MintReceipt {
+  public shared({ caller }) func mintDip721(to: Principal, metadata: Types.FullMetadata) : async Types.MintReceipt {
     if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
       return #Err(#Unauthorized);
     };
