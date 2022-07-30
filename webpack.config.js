@@ -117,4 +117,12 @@ module.exports = {
     watchFiles: [path.resolve(__dirname, "src", frontendDirectory)],
     liveReload: true,
   },
+  externals: {
+    "@material-ui/core": {
+      root: "MaterialUI",
+      commonjs: "@material-ui/core",
+      commonjs2: "@material-ui/core",
+      amd: "@material-ui/core",
+    },
+  },
 };

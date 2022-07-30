@@ -1,5 +1,14 @@
-import React from 'react'
+import React from 'react';
 
 export default function Home() {
-  return <></>
+  
+  return (
+    <div>
+      <div>
+        <h3>My NFTs</h3>
+        <div>
+        </div>
+      </div>
+    </div>
+  )
 }

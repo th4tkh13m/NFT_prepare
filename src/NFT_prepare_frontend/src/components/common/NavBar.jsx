@@ -1,36 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/images/logo_colored.png'
 import {
-  Connect2ICProvider,
   ConnectButton,
+  ConnectDialog,
+  Connect2ICProvider,
   useConnect,
 } from '@connect2ic/react'
-import { createClient } from '@connect2ic/core'
-import { PlugWallet } from '@connect2ic/core/providers/plug-wallet'
-import { canisterId } from '../../../../declarations/NFT_prepare_backend/index.js'
-import { idlFactory } from '../../../../declarations/NFT_prepare_backend/NFT_prepare_backend.did.js'
-
-const canisterDefinitions = {
-  superheroes: { idlFactory, canisterId },
-}
-
-// const client = createClient({
-//   canisters: canisterDefinitions,
-//   providers: [new PlugWallet()],
-// })
 
 export default function NavBar() {
-  const host = window.location.origin
-  const [client, setClient] = React.useState()
-
-  // const { connect, isConnected } = useConnect({
-  //   onConnect: () => {
-  //     console.log('connected')
-  //   },
-  // })
-
+  const { isConnected, principal, activeProvider } = useConnect({})
   return (
     <Nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
@@ -45,29 +25,8 @@ export default function NavBar() {
             Create Item
           </Link>
         </div>
-        <button
-          onClick={() =>
-            setClient(
-              createClient({
-                canisters: canisterDefinitions,
-                providers: [new PlugWallet()],
-              })
-            )
-          }
-          className="btn btn-outline-success"
-          type="submit"
-        >
-          Connect Wallet
-        </button>
-        <Connect2ICProvider client={client} host={host}>
-          <ConnectButton
-            dark={false}
-            onConnect={() => {
-              console.log('connect')
-            }}
-            onDisconnect={() => {}}
-          />
-        </Connect2ICProvider>
+        <ConnectButton />
+        <h1>{principal}</h1>
       </div>
     </Nav>
   )
@@ -78,5 +37,12 @@ const Nav = styled.nav`
     width: 35px;
     height: 35px;
     border-radius: 50%;
+  }
+  .connect-button {
+    background-image: linear-gradient(45deg, #ff00aa, #3f35ff);
+    color: #fff;
+    border-radius: 10px;
+    border: 0px;
+    padding: 5px 15px;
   }
 `
