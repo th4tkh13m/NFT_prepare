@@ -110,8 +110,8 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     );
   };
 
-  public query func getMetadataDip721(token_id: Types.TokenId) : async Types.FullMetadata {
-    let item = List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id });
+  public query func getMetadataDip721(token_id: Types.TokenId) : async Types.MetadataResult {
+    let item = findNFT(token_id);
     switch (item) {
       case null {
         return #Err(#InvalidTokenId);
@@ -122,24 +122,57 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     };
   };
 
-    public query func getCenter(token_id : Types.TokenId) : async Text {
-        let metadata = get MetadataDip721(token_id);
-        return metadata.center;
+  private func findNFT(token_id : Types.TokenId) : ?Types.Nft {
+    List.find(nfts, func(token: Types.Nft) : Bool { token.id == token_id })
+  };
+
+  public query func getCenter(token_id : Types.TokenId) : async ?Text {
+    let item = findNFT(token_id);
+    switch (item) {
+      case null {
+        null
+      };
+      case (?token) {
+        ?token.metadata.center
+      }
+      };
+    
     };
 
-    public query func getName(token_id : Types.TokenId) : async Text {
-        let metadata = get MetadataDip721(token_id);
-        return metadata.name;
+    public query func getName(token_id : Types.TokenId) : async ?Text {
+        let item = findNFT(token_id);
+      switch (item) {
+      case null {
+        null
+      };
+      case (?token) {
+        ?token.metadata.name
+      }
+      };
     };
 
-    public query func getID(token_id : Types.TokenId) : async Text {
-        let metadata = get MetadataDip721(token_id);
-        return metadata.id;
+    public query func getID(token_id : Types.TokenId) : async ?Text {
+        let item = findNFT(token_id);
+    switch (item) {
+      case null {
+        null
+      };
+      case (?token) {
+        ?token.metadata.id
+      }
+      };
     };
 
-    public query func getCid(token_id : Types.TokenId) : async Text {
-        let metadata = get MetadataDip721(token_id);
-        return metadata.Cid;
+    public query func getCid(token_id : Types.TokenId) : async ?Text {
+        let item = findNFT(token_id);
+    switch (item) {
+      case null {
+        null
+      };
+      case (?token) {
+        ?token.metadata.cid
+      }
+      };
     };
 
 
