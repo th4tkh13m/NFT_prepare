@@ -9,10 +9,11 @@
         "NFT_prepare_backend"
       ],
       "frontend": {
-        "entrypoint": "src/NFT_prepare_frontend/src/index.html"
+        "entrypoint": "src/NFT_prepare_frontend/index.html"
       },
       "source": [
-        "src/NFT_prepare_frontend/assets",
+        "src/NFT_prepare_frontend/src/components",
+        "src/NFT_prepare_frontend/src/assets",
         "dist/NFT_prepare_frontend/"
       ],
       "type": "assets"
