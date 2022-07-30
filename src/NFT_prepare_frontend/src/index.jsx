@@ -1,41 +1,25 @@
 import * as React from 'react'
 import { render } from 'react-dom'
 import { createRoot } from 'react-dom/client'
-import { NFT_prepare_backend } from '../../declarations/NFT_prepare_backend'
+import { NFT_prepare_backend } from '../../declarations/NFT_prepare_backend';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "./components/common/NavBar";
+import Create from "./components/spec/Create";
+import Home from "./components/spec/Home";
 
-const MyHello = () => {
-  const [name, setName] = React.useState('')
-  const [message, setMessage] = React.useState('')
-
-  async function doGreet() {
-    const greeting = await NFT_prepare_backend.greet(name)
-    setMessage(greeting)
-  }
-
+const App = () => {
   return (
-    <div style={{ fontSize: '30px' }}>
-      <div style={{ backgroundColor: 'yellow' }}>
-        <p>Greetings, from DFINITY!</p>
-        <p>
-          {' '}
-          Type your message in the Name input field, then click{' '}
-          <b> Get Greeting</b> to display the result.
-        </p>
-      </div>
-      <div style={{ margin: '30px' }}>
-        <input
-          id="name"
-          value={name}
-          onChange={ev => setName(ev.target.value)}
-        ></input>
-        <button onClick={doGreet}>Get Greeting!</button>
-      </div>
-      <div>
-        Greeting is: "<span style={{ color: 'blue' }}>{message}</span>"
-      </div>
-    </div>
-  )
+    <>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/create" element={<Create/>}/>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
 const root = createRoot(document.getElementById('app'))
-root.render(<MyHello />)
+root.render(<App />)
