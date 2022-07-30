@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import Logo from '../../assets/images/logo_colored.png'
 import {
   ConnectButton,
-  ConnectDialog,
-  Connect2ICProvider,
   useConnect,
 } from '@connect2ic/react'
 

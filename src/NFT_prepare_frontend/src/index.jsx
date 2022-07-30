@@ -15,16 +15,16 @@ import { idlFactory } from '../../declarations/NFT_prepare_backend/NFT_prepare_b
 import styled from "styled-components";
 
 
-const canisterDefinitions = {
-  superheroes: { idlFactory, canisterId },
-}
-
-const client = createClient({
-  canisters: canisterDefinitions,
-  providers: [new PlugWallet()],
-})
 
 const App = () => {
+  const canisterDefinitions = {
+    superheroes: { idlFactory, canisterId },
+  }
+  
+  const client = createClient({
+    canisters: canisterDefinitions,
+    providers: [new PlugWallet()],
+  })
   return (
     <>
       <BrowserRouter>

@@ -3,10 +3,10 @@ import { Web3Storage } from 'web3.storage'
 
 export default function Create() {
   const [imgUri, setImgUri] = useState('')
-
+  const [file, setFile] = useState(null)
   const getFile = e => {
     let file = e.target.files[0]
-
+    setFile(file)
     if (file) {
       const reader = new FileReader()
       reader.onload = () => {
@@ -17,8 +17,12 @@ export default function Create() {
     }
   }
 
-  const generateNft = () => {
-    console.log(process.env.REACT_APP_TOKEN_WEB3_STORAGE)
+  const generateNft = async () => {
+    if (file) {
+      const client = new Web3Storage({ token: process.env.TOKEN_WEB3_STORAGE })
+      const cid = await client.put(file)
+    }
+    console.log()
   }
 
   return (
@@ -39,6 +43,21 @@ export default function Create() {
         Upload
       </button>
       <img src={imgUri} alt="preview" />
+      <div className="container">
+        <div className="row">
+
+
+          <div class="card col-md-4" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   )
 }

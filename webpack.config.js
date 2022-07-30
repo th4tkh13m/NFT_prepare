@@ -101,9 +101,7 @@ module.exports = {
       Buffer: [require.resolve("buffer/"), "Buffer"],
       process: require.resolve("process/browser"),
     }),
-    new Dotenv({
-      path: './some.other.env' // default is .env
-    })
+    new Dotenv()
   ],
   // proxy /api to port 8000 during development
   devServer: {
