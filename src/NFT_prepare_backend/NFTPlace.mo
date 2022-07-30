@@ -1,0 +1,3 @@
+actor {
+    let KYCed = HashMap.
+}
