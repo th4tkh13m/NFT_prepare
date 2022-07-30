@@ -54,7 +54,7 @@ jobs:
       - name : run dfx
         run : |
           dfx start --background
-          dfx deploy
+          dfx deploy --argument="(principal \"$(dfx identity get-principal)\")"
       - name : stop dfx
         run : dfx stop
       # Runs a set of commands using the runners shell
