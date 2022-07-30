@@ -11,6 +11,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   // Interact with foo actor, calling the greet method
   const greeting = await NFT_prepare_backend.greet(name);
 
+  console.log(123);
   button.removeAttribute("disabled");
 
   document.getElementById("greeting").innerText = greeting;
