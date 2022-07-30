@@ -10,6 +10,9 @@ import Bool "mo:base/Bool";
 import Principal "mo:base/Principal";
 import Types "./Types";
 
+import Iter "mo:base/Iter";
+import Buffer "mo:base/Buffer";
+
 shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibleToken) = Self {
   stable var transactionId: Types.TransactionId = 0;
   stable var nfts = List.nil<Types.Nft>();
@@ -202,9 +205,9 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
 //   };
 
   public shared({ caller }) func mintDip721(to: Principal, metadata: Types.FullMetadata) : async Types.MintReceipt {
-    if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
-      return #Err(#Unauthorized);
-    };
+    // if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
+    //   return #Err(#Unauthorized);
+    // };
 
     let newId = Nat64.fromNat(List.size(nfts));
     let nft : Types.Nft = {
@@ -222,4 +225,14 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       id = transactionId;
     });
   };
+
+  public query func getAllTokens() : async [Types.FullMetadata] {
+    let iter : Iter.Iter<Types.Nft> = List.toIter(nfts);
+    var array = Buffer.Buffer<Types.FullMetadata>(Iter.size(iter));
+    for(i in iter){
+      array.add(i.metadata);
+    };
+    return array.toArray();
+  };
+
 }
