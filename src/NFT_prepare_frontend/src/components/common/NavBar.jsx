@@ -1,9 +1,12 @@
-import React from 'react';
-import styled from "styled-components";
-import { Link } from "react-router-dom";
-import Logo from "../../assets/images/logo_colored.png";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import Logo from '../../assets/images/logo_colored.png'
+import { ConnectButton, ConnectDialog, Connect2ICProvider, useConnect } from "@connect2ic/react";
+
 
 export default function NavBar() {
+  const { isConnected, principal, activeProvider } = useConnect({  })
   return (
     <Nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
@@ -18,16 +21,23 @@ export default function NavBar() {
             Create Item
           </Link>
         </div>
-        <button className="btn btn-outline-success" type="submit">Connect Wallet</button>
+        <ConnectButton />
       </div>
     </Nav>
   )
 }
 
 const Nav = styled.nav`
-  img{
+  img {
     width: 35px;
     height: 35px;
     border-radius: 50%;
   }
-`;
+  .connect-button{
+    background-image: linear-gradient(45deg, #ff00aa, #3f35ff);
+    color: #fff;
+    border-radius: 10px;
+    border: 0px;
+    padding: 5px 15px;
+  }
+`
