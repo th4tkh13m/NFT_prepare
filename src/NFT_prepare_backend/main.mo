@@ -9,6 +9,8 @@ import Option "mo:base/Option";
 import Bool "mo:base/Bool";
 import Principal "mo:base/Principal";
 import Types "./Types";
+import Iter "mo:base/Iter";
+import Buffer "mo:base/Buffer";
 
 shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibleToken) = Self {
   stable var transactionId: Types.TransactionId = 0;
@@ -223,7 +225,14 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
     });
   };
 
-  public func hello() : async Text{
-    return "Hello";
+  public query func getAllTokens() : async [Types.FullMetadata] {
+    let iter : Iter.Iter<Types.Nft> = List.toIter(nfts);
+
+    var array = Buffer.Buffer<Types.FullMetadata>(List.size(nfts));
+    // Debug.print(Nat.toText(List.size(nfts)));
+    for(i in iter){
+      array.add(i.metadata);
+    };
+    return array.toArray();
   };
 }
