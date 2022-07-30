@@ -27,11 +27,8 @@
     "events": "3.3.0",
     "html-webpack-plugin": "5.5.0",
     "process": "0.11.10",
-<<<<<<< HEAD
     "react-router-dom": "^6.3.0",
-=======
     "sass-loader": "^13.0.2",
->>>>>>> 42d5d8ec7365bcfdae7b161fecff550c6313f794
     "stream-browserify": "3.0.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.3",
@@ -53,12 +50,9 @@
     "last 2 edge version"
   ],
   "dependencies": {
-<<<<<<< HEAD
+    "@babel/preset-react": "^7.18.6",
     "@connect2ic/core": "^0.1.6",
     "@connect2ic/react": "^0.1.4",
-=======
-    "@babel/preset-react": "^7.18.6",
->>>>>>> 42d5d8ec7365bcfdae7b161fecff550c6313f794
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",

@@ -5,9 +5,7 @@
       "type": "motoko"
     },
     "NFT_prepare_frontend": {
-      "dependencies": [
-        "NFT_prepare_backend"
-      ],
+      "dependencies": ["NFT_prepare_backend"],
       "frontend": {
         "entrypoint": "src/NFT_prepare_frontend/index.html"
       },
