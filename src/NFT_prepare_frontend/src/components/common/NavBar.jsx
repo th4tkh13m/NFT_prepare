@@ -2,15 +2,14 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/images/logo_colored.png'
+
 import {
   ConnectButton,
-  ConnectDialog,
-  Connect2ICProvider,
   useConnect,
 } from '@connect2ic/react'
 
 export default function NavBar() {
-  const { isConnected, principal, activeProvider } = useConnect({})
+  const { principal } = useConnect({})
   return (
     <Nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
@@ -25,14 +24,21 @@ export default function NavBar() {
             Create Item
           </Link>
         </div>
-        <ConnectButton />
-        <h1>{principal}</h1>
+        <div className='d-flex align-items-center h100'>
+          {
+            principal &&
+            <div className='wallet_id'>{principal}</div>
+          }
+          <ConnectButton />
+        </div>
       </div>
     </Nav>
   )
 }
 
 const Nav = styled.nav`
+  height: 60px;
+  border-bottom: 1px solid #ccc;
   img {
     width: 35px;
     height: 35px;
@@ -44,5 +50,16 @@ const Nav = styled.nav`
     border-radius: 10px;
     border: 0px;
     padding: 5px 15px;
+  }
+  .wallet_id{
+    width: 100px;
+    height: 35px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 3px solid #000;
+    border-radius: 30px;
+    padding: 0px 10px;
+    margin-right: 15px;
   }
 `
