@@ -20,11 +20,15 @@ const App = () => {
   const canisterDefinitions = {
     superheroes: { idlFactory, canisterId },
   }
-  
+
   const client = createClient({
     canisters: canisterDefinitions,
     providers: [new PlugWallet()],
   })
+
+  const hello = async () => {
+    return await NFT_prepare_backend.hello()
+  }
   return (
     <>
       <BrowserRouter>

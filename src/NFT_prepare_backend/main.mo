@@ -202,9 +202,9 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
 //   };
 
   public shared({ caller }) func mintDip721(to: Principal, metadata: Types.FullMetadata) : async Types.MintReceipt {
-    if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
-      return #Err(#Unauthorized);
-    };
+    // if (not List.some(custodians, func (custodian : Principal) : Bool { custodian == caller })) {
+    //   return #Err(#Unauthorized);
+    // };
 
     let newId = Nat64.fromNat(List.size(nfts));
     let nft : Types.Nft = {
@@ -221,5 +221,9 @@ shared actor class Dip721NFT(custodian: Principal, init : Types.Dip721NonFungibl
       token_id = newId;
       id = transactionId;
     });
+  };
+
+  public func hello() : async Text{
+    return "Hello";
   };
 }
